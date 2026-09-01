@@ -103,6 +103,16 @@ media-catch/
 |------------|-----------|
 | `pnpm typecheck` | ✅ PASS |
 | `pnpm build` | ✅ PASS — genera `.d.ts`, `.js`, `.map` para 5 módulos |
+| Consumo del package (`import from '@media-catch/protocol'`) | ✅ PASS — valores runtime importados correctamente |
+| Factory functions (`createSignalingMessage`, `createCommand`, `createEvent`, `createStreamId`, `createTrackId`, `generateSessionCode`) | ✅ PASS |
+| Type guards (`isSignalingMessage`) | ✅ PASS |
+| Constantes exportadas (`ICE_CONFIG_LAN`, `ICE_CONFIG_INTERNET`, `SESSION_TTL_MS`) | ✅ PASS |
+
+### Corrección técnica aplicada
+
+- Los imports internos en `src/` ahora usan extensiones `.js` (ej: `from './session.js'`) para compatibilidad Node ESM
+- `package.json` configurado con `exports`, `main`, `types` apuntando a `dist/`
+- Types (interfaces, type aliases) solo existen en `.d.ts` — correctamente separados de valores runtime
 
 ### Qué NO se implementó (fuera de Phase 1)
 

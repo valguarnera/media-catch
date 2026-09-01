@@ -1,4 +1,4 @@
-import type { Command, Event, Session, Peer, Capability, Stream, Track } from './index';
+import type { Command, Event, Session, Peer, Capability, Stream, Track } from './index.js';
 
 export type SignalingMessageType =
   | 'offer'
@@ -115,17 +115,80 @@ export function isSignalingMessage(msg: unknown): msg is SignalingMessage {
   );
 }
 
-export function createSignalingMessage<T extends SignalingMessageType>(
-  type: T,
+export function createRegisterMessage(
   sessionId: string,
   peerId: string,
-  payload: SignalingMessage extends { type: T } ? SignalingMessage['payload'] : never
-): Extract<SignalingMessage, { type: T }> {
-  return {
-    type,
-    sessionId,
-    peerId,
-    timestamp: Date.now(),
-    payload,
-  } as Extract<SignalingMessage, { type: T }>;
+  payload: RegisterMessage['payload']
+): RegisterMessage {
+  return { type: 'register', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createRegisterAckMessage(
+  sessionId: string,
+  peerId: string,
+  payload: RegisterAckMessage['payload']
+): RegisterAckMessage {
+  return { type: 'register-ack', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createOfferMessage(
+  sessionId: string,
+  peerId: string,
+  payload: OfferMessage['payload']
+): OfferMessage {
+  return { type: 'offer', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createAnswerMessage(
+  sessionId: string,
+  peerId: string,
+  payload: AnswerMessage['payload']
+): AnswerMessage {
+  return { type: 'answer', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createIceCandidateMessage(
+  sessionId: string,
+  peerId: string,
+  payload: IceCandidateMessage['payload']
+): IceCandidateMessage {
+  return { type: 'ice-candidate', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createCommandMessage(
+  sessionId: string,
+  peerId: string,
+  payload: CommandMessage['payload']
+): CommandMessage {
+  return { type: 'command', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createEventMessage(
+  sessionId: string,
+  peerId: string,
+  payload: EventMessage['payload']
+): EventMessage {
+  return { type: 'event', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createErrorMessage(
+  sessionId: string,
+  peerId: string,
+  payload: ErrorMessage['payload']
+): ErrorMessage {
+  return { type: 'error', sessionId, peerId, timestamp: Date.now(), payload };
+}
+
+export function createPingMessage(
+  sessionId: string,
+  peerId: string
+): PingMessage {
+  return { type: 'ping', sessionId, peerId, timestamp: Date.now(), payload: undefined };
+}
+
+export function createPongMessage(
+  sessionId: string,
+  peerId: string
+): PongMessage {
+  return { type: 'pong', sessionId, peerId, timestamp: Date.now(), payload: undefined };
 }
