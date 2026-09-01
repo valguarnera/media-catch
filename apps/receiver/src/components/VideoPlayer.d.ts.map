@@ -1,0 +1,1 @@
+{"version":3,"file":"VideoPlayer.d.ts","sourceRoot":"","sources":["VideoPlayer.tsx"],"names":[],"mappings":"AAEA,UAAU,gBAAgB;IACxB,MAAM,EAAE,WAAW,GAAG,IAAI,CAAC;IAC3B,OAAO,CAAC,EAAE,CAAC,KAAK,EAAE,KAAK,KAAK,IAAI,CAAC;CAClC;AAED,wBAAgB,WAAW,CAAC,EAAE,MAAM,EAAE,OAAO,EAAE,EAAE,gBAAgB,+BA4DhE"}

@@ -119,14 +119,17 @@ pnpm --filter=@media-catch/server start
 
 > **Nota sobre @types/node 22.10.0:** El devcontainer usa Node.js 24.20.0 (LTS). @types/node 22.x es compatible hacia atrás con Node 24 para los APIs utilizados (fs, path, process, timers). No se observaron problemas de tipos en la validación. Si surgen incompatibilidades futuras, actualizar a @types/node 24.x.
 
-### Cambios en @media-catch/protocol durante Phase 2
+### Cambios realizados en @media-catch/protocol durante Phase 2
+
+Durante la implementación del Signaling Server, se realizaron los siguientes cambios en `@media-catch/protocol`:
 
 | Cambio | Archivo | Motivo |
 |--------|---------|--------|
-| Agregadas factory functions `create*Message` | `signaling.ts` | Reemplaza `createSignalingMessage` genérico para mejor type inference y evitar conditional types complejos en handlers |
-| Exports con extensiones `.js` | `index.ts` | Requerido por Node ESM nativo con `verbatimModuleSyntax` |
+| Agregadas factory functions `create*Message` (`createRegisterMessage`, `createOfferMessage`, `createAnswerMessage`, `createIceCandidateMessage`, `createCommandMessage`, `createEventMessage`, `createErrorMessage`, `createPingMessage`, `createPongMessage`, `createRegisterAckMessage`) | `signaling.ts` | Reemplaza `createSignalingMessage` genérico para mejor type inference y evitar conditional types complejos en handlers del servidor |
+| Exports con extensiones `.js` | `index.ts` | Requerido por Node ESM nativo con `verbatimModuleSyntax: true` |
+| `createSignalingMessage` genérico eliminado | `signaling.ts` | Reemplazado por factories específicas para mejor type inference |
 
-No se modificaron tipos de datos existentes (Session, Peer, Command, Event, Media, etc.).
+> **No se modificaron tipos de datos existentes** (Session, Peer, Command, Event, Media, Stream, Track, IceConfig, Capability, etc.).
 
 ### Qué NO se implementó
 
@@ -145,13 +148,24 @@ No se modificaron tipos de datos existentes (Session, Peer, Command, Event, Medi
 - ❌ Persistencia de sesiones
 - ❌ API REST completa
 
+### Roadmap corregido
+
+| Fase | Objetivo | PWA | QR |
+|------|----------|-----|-----|
+| Phase 3 | Receiver Web App | ❌ | ❌ |
+| Phase 4 | Sender Web App | ❌ | ❌ |
+| Phase 5 | LAN Integration | ❌ | ❌ |
+| Phase 6 | PWA / Installability | ✅ | ❌ |
+| Phase 7 | QR Pairing | ✅ | ✅ |
+| Phase 8 | Internet Mode | ✅ | ✅ |
+
+> **Regla:** PWA (Service Worker, Manifest, `vite-plugin-pwa`) → Phase 6 exclusivamente. QR pairing (`qrcode`, `html5-qrcode`) → Phase 7 exclusivamente.
+
 ### Pendientes para Phase 3
 
 1. Crear `apps/receiver` con Vite + React + TypeScript
 2. Implementar UI: generar session code (6 chars, **manual** — sin QR)
 3. WebRTC `RTCPeerConnection` con `iceServers: []`
 4. Manejo `ontrack` → render `<video>` + `<audio>`
-5. Controles básicos: disconnect, toggle audio/video
-6. Integración completa LAN: receiver → session code → sender → stream
-
-> **Nota:** QR pairing (`qrcode`, `html5-qrcode`) y PWA (`vite-plugin-pwa`, Service Worker, Manifest) quedan para Phase 6 y Phase 7 respectivamente.
+4. Controles básicos: disconnect, toggle audio/video
+5. Integración completa LAN: receiver → session code → sender → stream
