@@ -1,0 +1,17 @@
+{
+  "name": "media-catch",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter=./apps/* dev",
+    "build": "pnpm --filter=./apps/* --filter=./packages/* build",
+    "typecheck": "pnpm --filter=./apps/* --filter=./packages/* typecheck",
+    "cert:dev": "bash scripts/generate-dev-cert.sh"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
